@@ -15,3 +15,4 @@ jobs:
       - run: pip install --no-deps -e .
       - run: ruff check . && ruff format --check . && pytest -q
       - run: python -m predictive_control.train --steps 1024 --eval-episodes 2 --output runs/ci
+      - run: python -m predictive_control.train_crossing --steps 1024 --output runs/ci-crossing

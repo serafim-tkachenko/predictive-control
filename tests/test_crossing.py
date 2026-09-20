@@ -1,3 +1,5 @@
+from collections import deque
+
 import numpy as np
 import torch
 from stable_baselines3 import PPO
@@ -39,5 +41,26 @@ def test_sampled_evaluation_reproducible_without_changing_training_rng():
         b = evaluate_layouts(model, layouts, repeats=1)
         assert a == b
         assert np.isfinite(a["mean_return"])
+    finally:
+        env.close()
+
+
+def test_all_frozen_maps_have_reachable_goal():
+    env = make_env(ENV_ID)
+    try:
+        split = load_split()
+        for layout in split["train"] + split["development"] + split["test"]:
+            env.reset(seed=layout["seed"])
+            frontier, visited = deque([(1, 1)]), {(1, 1)}
+            while frontier:
+                x, y = frontier.popleft()
+                for point in [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]:
+                    if not (0 <= point[0] < 9 and 0 <= point[1] < 9):
+                        continue
+                    obj = env.unwrapped.grid.get(*point)
+                    if point not in visited and (obj is None or obj.can_overlap()):
+                        visited.add(point)
+                        frontier.append(point)
+            assert (7, 7) in visited
     finally:
         env.close()
