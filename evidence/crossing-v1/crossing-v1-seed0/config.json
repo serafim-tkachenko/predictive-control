@@ -1,0 +1,211 @@
+{
+  "env": "MiniGrid-SimpleCrossingS9N1-v0",
+  "steps": 524288,
+  "seed": 0,
+  "n_envs": 8,
+  "ppo": {
+    "n_steps": 128,
+    "batch_size": 256,
+    "n_epochs": 4,
+    "learning_rate": 0.0003,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "policy_kwargs": {
+      "net_arch": {
+        "pi": [
+          64,
+          64
+        ],
+        "vf": [
+          64,
+          64
+        ]
+      }
+    },
+    "device": "cpu",
+    "seed": 0
+  },
+  "split": {
+    "env": "MiniGrid-SimpleCrossingS9N1-v0",
+    "generator_seed": 20260920,
+    "train": [
+      {
+        "seed": 4,
+        "geometry_sha256": "331e762d6a56a78d91a36249af48c0c2c20a7f2d76bdfca9fed4a9d95cc29a69"
+      },
+      {
+        "seed": 113,
+        "geometry_sha256": "b9918f1e10c83e5ec0a9b8a47aaff7db09b475ec8401c286150e85d3763dd62d"
+      },
+      {
+        "seed": 163,
+        "geometry_sha256": "93f915c9aa4e45a8210d29da29882b061f9cd199bcc6ad7402f8b3d7bd8d32a8"
+      },
+      {
+        "seed": 15,
+        "geometry_sha256": "383e02260fed24bcce29fe9f6d5993d94209a4570d5e8a30029d62499fa19f8b"
+      },
+      {
+        "seed": 14,
+        "geometry_sha256": "2eb953ac99888e6154be864417aad1741b268ad8b470eaa7eb75f1f00628226a"
+      },
+      {
+        "seed": 39,
+        "geometry_sha256": "e14edaf4a1da143bee8616297941cf735cd6040612537b8abec4d7a9ef524356"
+      },
+      {
+        "seed": 7,
+        "geometry_sha256": "243e6a95dca33e1385e037dbbbdb6e757ea5a8f2f1cb8efeb02bddaf950cd8c4"
+      },
+      {
+        "seed": 75,
+        "geometry_sha256": "94f123f78c07b9e49822372e3dbb5abef36583be9c5052d1215b933693bb52f7"
+      },
+      {
+        "seed": 44,
+        "geometry_sha256": "4180e5b33921f4ca391594aef14a1a27e8aa5c2fecbfd5b15444e0aa0e8809d7"
+      },
+      {
+        "seed": 92,
+        "geometry_sha256": "89424ffef3eba81590a3b5aa435085da1a1bf63b56d066e897f120105e9a61df"
+      },
+      {
+        "seed": 18,
+        "geometry_sha256": "055a66716670aaf827fc07562405f9355b90c73db5b5ce440eb5388455be025c"
+      },
+      {
+        "seed": 19,
+        "geometry_sha256": "6cbe7474ae14b97182756b207f3d12e04f93ab62f00177135d101f6297883486"
+      },
+      {
+        "seed": 8,
+        "geometry_sha256": "04d9b0894e9ab61dc16d50c710b8756a8a86a3a3e8259b8bdc1b7839967b92b2"
+      },
+      {
+        "seed": 57,
+        "geometry_sha256": "a6aa43c54014da4c938c3f671a7156f059d566e42b17288d48e580bc12a5bf3d"
+      },
+      {
+        "seed": 88,
+        "geometry_sha256": "51476586e9b19d1c64ee1f5fa9b3a30779bfe3750d1373883c1e057b7794a621"
+      },
+      {
+        "seed": 25,
+        "geometry_sha256": "314ff78b35d17f5440afdb53ed69f9d545c1ba93752f26d4143b6b37ffe8c6dd"
+      },
+      {
+        "seed": 27,
+        "geometry_sha256": "c3642dcc4481f29e5be2be63b31d7a4360945463cdd249d811a7bb01191880d1"
+      },
+      {
+        "seed": 9,
+        "geometry_sha256": "78714108e9ee79c8068a12fe55ab06d545ed26fbba3c8448945f9a59f91b228f"
+      },
+      {
+        "seed": 107,
+        "geometry_sha256": "4834df693697cd1b0827e7542ae2b6a1ff6edee89214877e5334a335257a8901"
+      },
+      {
+        "seed": 47,
+        "geometry_sha256": "8a07f1776cd7d01d50cd14640010d02ab4dcb412f8ab7970e402ab707ac08416"
+      },
+      {
+        "seed": 32,
+        "geometry_sha256": "a6def0806ceb697e4152ea90a058aa51d2e28b784f96c19503a345737c61e7a4"
+      },
+      {
+        "seed": 2,
+        "geometry_sha256": "60fd44e8cfac98ad45babd3c485e6c9a9dc8b50431f33a46dcf761769dd0f750"
+      },
+      {
+        "seed": 82,
+        "geometry_sha256": "6b91456823993f356f6c29efcd52257294c1391bccefeb1b3ee0b3c5adda4d02"
+      },
+      {
+        "seed": 6,
+        "geometry_sha256": "415d2c93a984416b06020b4604be8bf2132f211a96e3131e162e1e56c90fb32a"
+      },
+      {
+        "seed": 0,
+        "geometry_sha256": "545237fe197a3e391df9cf9bdc1f7bcb6c97eadeb9189e4ef50e177517af285f"
+      },
+      {
+        "seed": 1,
+        "geometry_sha256": "70ede30b5040e642923d35ab54f2d23cb540a5ed96c922901fafc4f3d880ae54"
+      },
+      {
+        "seed": 77,
+        "geometry_sha256": "1ed9f6ee6984d31452ec5e3c3bc55787286edb9b4e95c54390c49d55e167da90"
+      },
+      {
+        "seed": 36,
+        "geometry_sha256": "88c26ec37ab0d2c4e2e97fd47a05ac0cf3019b7d1dc9abf15ae987eabe801c6c"
+      }
+    ],
+    "development": [
+      {
+        "seed": 12,
+        "geometry_sha256": "f789b25b9ed107976bc7c963ecab4d4079007c82cab1ee47e8c3bb4fb60b868a"
+      },
+      {
+        "seed": 29,
+        "geometry_sha256": "4e18d5c87037cb1fdea6ed1de5efa3eb79809bc0f867dd1b2efd4cf724e924d1"
+      },
+      {
+        "seed": 16,
+        "geometry_sha256": "1774fc30640af1b4b6ce06331e672c88757c8e590c1266c856ff1281d33d40e5"
+      },
+      {
+        "seed": 31,
+        "geometry_sha256": "54c8663cceee113c0a769e292d1682c5cf9f5c94d16a9bff94e357599770f47e"
+      },
+      {
+        "seed": 34,
+        "geometry_sha256": "e4e5d6e48f33c2ac362d0d40f4ba9c0d45d42a83d74ac3b882f569af7751a12e"
+      },
+      {
+        "seed": 13,
+        "geometry_sha256": "80043525f99a3cac76e87f2a9abe3e01123879d78fc07ec73b0510895e7f78d9"
+      },
+      {
+        "seed": 3,
+        "geometry_sha256": "88cc97b03bae3fafc92050ffcba9023ee44a5840e4357e73ec59d7b7bebf0937"
+      }
+    ],
+    "test": [
+      {
+        "seed": 54,
+        "geometry_sha256": "001d4ec83de5274a84ba66423d881b974b5b9a86dada394cf5693df2193c6481"
+      },
+      {
+        "seed": 23,
+        "geometry_sha256": "c7428569058aec8533f172c250a0f3927c701feffd25e71800000d54142c5a6f"
+      },
+      {
+        "seed": 5,
+        "geometry_sha256": "88e0cad9435b2b63d6510f524e46aba6d5337bfdda9f5adf3c5b91e4494e1a2b"
+      },
+      {
+        "seed": 127,
+        "geometry_sha256": "6a1188f888304ce05f925d29be0d3ca519dba4cc862bd83b4fd1636e3b46c1f3"
+      },
+      {
+        "seed": 24,
+        "geometry_sha256": "1de962d27a6f9b16cf5e157cdf09289b211b6394e22cfc932b48a0f99ad7b768"
+      },
+      {
+        "seed": 21,
+        "geometry_sha256": "cf94354b8df9b96ff4fbc4699e6cccce6d45b479b8bffe1886102b2103d36c0b"
+      },
+      {
+        "seed": 17,
+        "geometry_sha256": "f96bd62de7a9139f890785859f395bdfffdb47925a5dd26f5004635d47c43049"
+      }
+    ]
+  },
+  "observation": "full symbolic grid / 10, flattened",
+  "reward": "native sparse reward; no shaping",
+  "primary_evaluation": "sampled"
+}

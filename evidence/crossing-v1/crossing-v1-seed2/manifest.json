@@ -1,0 +1,20 @@
+{
+  "git_commit": "970fd3da31d147374eed4b1086d26d2d1839bf75",
+  "git_dirty": false,
+  "versions": {
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6",
+    "gymnasium": "1.3.0",
+    "minigrid": "3.1.0",
+    "stable-baselines3": "2.9.0"
+  },
+  "split_sha256": "82dae7753e80183829b64e029466dcc1616efe3cbff1aa1fd79979908851b3d4",
+  "source_sha256": {
+    "train_crossing.py": "f9ca512a051bfc1e5ec2e78a7e88f26820a9e0e1ae4e2f1b667b6112ac4dc7d9",
+    "crossing.py": "344f9e7af8103dd0f0bcd0a142d3abc4635c13359cf761425506dbdac0938a84",
+    "train.py": "ca6eb5c9d9a86b725ec5438fcc544a83c525b29de30744919d605b15ca354e34",
+    "audit.py": "280041ef2c7a41fa51c9479337902a79c286fb0d63f2873eaaabd0f67b4a4119",
+    "envs.py": "0956bd64e4e261d1018ead2543527373dd853d7faf9e3e7e64f14c246dc9cd44",
+    "__init__.py": "a81e6ea2f63939cc5a65e728e46dc739602b0c9c5704772800621bf18be34f24"
+  }
+}

@@ -46,6 +46,33 @@ Choose a task with meaningful variation, freeze its evaluation protocol, then co
 
 The general idea has substantial prior art: [SPR](https://arxiv.org/abs/2007.05929), [representation pretraining for RL](https://arxiv.org/abs/2106.04799), and [TACO](https://arxiv.org/abs/2306.13229). An auxiliary prediction loss is not by itself a new contribution, nor does it make PPO model-based RL. The next research question must be narrower than this repository's working theme.
 
+## Crossing: distinct training and evaluation layouts
+
+The next baseline uses native `MiniGrid-SimpleCrossingS9N1-v0`, a wall with a gap.
+Its 42 distinct geometries are frozen into 28 train, 7 development and 7 test maps.
+See the [protocol](protocols/crossing-v1.md) and [all layouts](protocols/crossing-layouts.png).
+The split is based on geometry hashes rather than just different random seeds.
+Observations are still symbolic; there is no JEPA objective or visual encoder yet.
+
+[Baseline results](evidence/crossing-v1/RESULTS.md): the three runs reached 46.9–66.5%
+sampled success on train maps and 32.6–55.8% on test maps. Median train success did not
+clear the protocol's 80% feasibility gate. Baseline learning needs investigation before
+using it to support a predictive-representation comparison.
+
+```bash
+.venv/bin/python -m predictive_control.train_crossing --seed 0 --output runs/crossing-v1-seed0
+.venv/bin/python -m predictive_control.train_crossing --seed 1 --output runs/crossing-v1-seed1
+.venv/bin/python -m predictive_control.train_crossing --seed 2 --output runs/crossing-v1-seed2
+.venv/bin/python scripts/evaluate_crossing.py --output runs/crossing-evaluation
+.venv/bin/python scripts/summarize_crossing.py runs/crossing-evaluation
+```
+
+Each run uses 524,288 interactions. Final evaluation refuses to start until all three
+checkpoints are complete and match the frozen split. Sampled actions are the primary
+metric; greedy actions remain a secondary diagnostic. Evaluation uses local RNGs that
+do not change training's random state. Repeated episodes on seven test maps are not
+hundreds of independent test geometries. Use a fresh output path when reproducing.
+
 ## Reproduce the state audit
 
 After generating the three 262,144-step checkpoints:
