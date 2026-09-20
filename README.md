@@ -6,6 +6,11 @@ The first experiment is deliberately small: Stable-Baselines3 PPO on MiniGrid Em
 
 [First calibration results and raw records](evidence/empty-20260920/RESULTS.md).
 
+[Follow-up: why greedy evaluations failed](evidence/empty-audit-20260920/RESULTS.md).
+Exhaustive evaluation of all 32 starts shows more than 99.98% success when sampling
+from each trained policy, while selecting the most likely action creates cycles.
+The sampled policies pass the small-room calibration; this does not establish transfer.
+
 ## Run the baseline
 
 Python 3.11; the initial configuration uses CPU and one PyTorch thread. With [uv](https://docs.astral.sh/uv/):
@@ -40,6 +45,21 @@ Evaluation uses a separate environment, deterministic policy actions, and fixed 
 Choose a task with meaningful variation, freeze its evaluation protocol, then compare RL alone against representation pretraining with and without future prediction. Count pretraining data collection as environment interaction and report compute separately. Check representation collapse, transfer and policy performance rather than relying on prediction loss alone.
 
 The general idea has substantial prior art: [SPR](https://arxiv.org/abs/2007.05929), [representation pretraining for RL](https://arxiv.org/abs/2106.04799), and [TACO](https://arxiv.org/abs/2306.13229). An auxiliary prediction loss is not by itself a new contribution, nor does it make PPO model-based RL. The next research question must be narrower than this repository's working theme.
+
+## Reproduce the state audit
+
+After generating the three 262,144-step checkpoints:
+
+```bash
+.venv/bin/python -m predictive_control.audit runs/empty-262k-seed0/model.zip runs/empty-262k-seed1/model.zip runs/empty-262k-seed2/model.zip --output runs/state-audit
+.venv/bin/python scripts/validate_audit.py --audit runs/state-audit
+.venv/bin/python scripts/summarize_audit.py runs/state-audit
+```
+
+The audit enumerates every valid start and measures both greedy and sampled execution.
+The second command independently checks the calculation with 4,096 actual episodes
+across three trained policies and a uniform random policy. This exact evaluator is
+specific to the deterministic 5x5 Empty room and stationary policies.
 
 ## Checks
 
