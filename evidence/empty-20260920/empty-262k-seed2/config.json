@@ -1,0 +1,33 @@
+{
+  "env": "MiniGrid-Empty-Random-5x5-v0",
+  "seed": 2,
+  "total_steps": 262144,
+  "n_envs": 8,
+  "eval_episodes": 32,
+  "observation": "full symbolic grid / 10, flattened",
+  "action_space": "all 7 native actions",
+  "ppo": {
+    "n_steps": 128,
+    "batch_size": 256,
+    "n_epochs": 4,
+    "learning_rate": 0.0003,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "policy_kwargs": {
+      "net_arch": {
+        "pi": [
+          64,
+          64
+        ],
+        "vf": [
+          64,
+          64
+        ]
+      }
+    },
+    "device": "cpu",
+    "seed": 2
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "python": "3.11.2",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+  "versions": {
+    "stable-baselines3": "2.9.0",
+    "torch": "2.14.0+cpu",
+    "gymnasium": "1.3.0",
+    "minigrid": "3.1.0",
+    "numpy": "2.4.6"
+  },
+  "git_commit": "eb862995afce66ab82c9779291ad746473cec485",
+  "git_dirty": false,
+  "source_sha256": {
+    "train.py": "ca6eb5c9d9a86b725ec5438fcc544a83c525b29de30744919d605b15ca354e34",
+    "envs.py": "0956bd64e4e261d1018ead2543527373dd853d7faf9e3e7e64f14c246dc9cd44",
+    "__init__.py": "a81e6ea2f63939cc5a65e728e46dc739602b0c9c5704772800621bf18be34f24"
+  }
+}

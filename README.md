@@ -4,6 +4,8 @@ Experiments on learning representations for reinforcement learning. The question
 
 The first experiment is deliberately small: Stable-Baselines3 PPO on MiniGrid Empty with randomized starts. It establishes a working RL training loop before adding a predictive objective. No JEPA model or new algorithm is implemented yet.
 
+[First calibration results and raw records](evidence/empty-20260920/RESULTS.md).
+
 ## Run the baseline
 
 Python 3.11; the initial configuration uses CPU and one PyTorch thread. With [uv](https://docs.astral.sh/uv/):
@@ -16,6 +18,12 @@ uv pip install --no-deps -e .
 ```
 
 Choose a fresh output directory for each run; existing results are never overwritten. Repeat with seeds 1 and 2 to inspect training variability. The environment is `MiniGrid-Empty-Random-5x5-v0`, with the native seven actions and reward. Observations are the **full symbolic grid**, flattened and divided by 10, including agent position and heading. They are not RGB images. The MLP has separate policy/value networks with two 64-unit hidden layers.
+
+The first 32,768-step pilot did not learn a reliable deterministic policy. The longer calibration uses `--steps 262144` with seeds 0, 1 and 2; all results, including the short pilot, are retained. Regenerate the results table and plot with:
+
+```bash
+.venv/bin/python scripts/summarize.py evidence/empty-20260920
+```
 
 Each run writes:
 
