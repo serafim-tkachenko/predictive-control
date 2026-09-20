@@ -1,92 +1,56 @@
 # Predictive control
 
-Experiments on learning representations for reinforcement learning. The question is when predicting future features helps a policy learn and transfer, and when prediction quality is a misleading proxy for control.
+Does learning to predict future states help an RL agent learn and generalize?
+This repository starts with PPO navigation baselines in MiniGrid. Predictive
+representation learning is the next step; there is no JEPA implementation yet.
 
-The first experiment is deliberately small: Stable-Baselines3 PPO on MiniGrid Empty with randomized starts. It establishes a working RL training loop before adding a predictive objective. No JEPA model or new algorithm is implemented yet.
+## Current results
 
-[First calibration results and raw records](evidence/empty-20260920/RESULTS.md).
+The small Empty room is solved reliably when actions are sampled from the trained
+policy. Choosing the most likely action can trap the same policy in a loop.
+[State audit](evidence/empty-audit-20260920/RESULTS.md).
 
-[Follow-up: why greedy evaluations failed](evidence/empty-audit-20260920/RESULTS.md).
-Exhaustive evaluation of all 32 starts shows more than 99.98% success when sampling
-from each trained policy, while selecting the most likely action creates cycles.
-The sampled policies pass the small-room calibration; this does not establish transfer.
+Crossing adds a wall with a movable opening. Its 42 layouts are split by geometry:
+28 for training, 7 for development, 7 for testing. After 524,288 interactions per seed:
 
-## Run the baseline
+| PPO seed | Train success | Test success |
+|---|---:|---:|
+| 0 | 48.7% | 36.2% |
+| 1 | 66.5% | 55.8% |
+| 2 | 46.9% | 32.6% |
+| Random actions | 5.0% | 6.25% |
 
-Python 3.11; the initial configuration uses CPU and one PyTorch thread. With [uv](https://docs.astral.sh/uv/):
+These scores use sampled actions. Learning on the training maps is still weak, so
+our next experiment will examine the baseline before adding a prediction objective.
+The current input is a flattened symbolic grid, not a rendered image.
+
+[Crossing results](evidence/crossing-v1/RESULTS.md) ·
+[Protocol](protocols/crossing-v1.md) ·
+[Layouts](protocols/crossing-layouts.png) ·
+[Working notes and next session](docs/notes/2026-09-20.md)
+
+## Run
+
+Python 3.11, with [uv](https://docs.astral.sh/uv/):
 
 ```bash
 uv venv --python 3.11
 uv pip install -r requirements-cpu.txt --extra-index-url https://download.pytorch.org/whl/cpu
 uv pip install --no-deps -e .
-.venv/bin/python -m predictive_control.train --seed 0 --steps 32768 --output runs/empty-seed0
-```
-
-Choose a fresh output directory for each run; existing results are never overwritten. Repeat with seeds 1 and 2 to inspect training variability. The environment is `MiniGrid-Empty-Random-5x5-v0`, with the native seven actions and reward. Observations are the **full symbolic grid**, flattened and divided by 10, including agent position and heading. They are not RGB images. The MLP has separate policy/value networks with two 64-unit hidden layers.
-
-The first 32,768-step pilot did not learn a reliable deterministic policy. The longer calibration uses `--steps 262144` with seeds 0, 1 and 2; all results, including the short pilot, are retained. Regenerate the results table and plot with:
-
-```bash
-.venv/bin/python scripts/summarize.py evidence/empty-20260920
-```
-
-Each run writes:
-
-- `config.json` and `manifest.json`: settings, software versions, commit and source hashes;
-- `development.json`: raw episodes before training and every 8,192 interactions;
-- `progress.csv` and `monitor/`: PPO diagnostics and training episode returns;
-- `final.json`: final-checkpoint evaluation and a uniform random-action baseline;
-- `model.zip`: the final checkpoint.
-
-Evaluation uses a separate environment, deterministic policy actions, and fixed seeds (10,000 onward for development, 20,000 onward for final evaluation). These are new random seeds, **not unseen layouts or necessarily unseen states**: the tiny room has a finite set of starts. Success means reaching the goal, not merely surviving until the time limit. No checkpoint selection uses the final evaluation. The output checkpoint can be loaded with `stable_baselines3.PPO.load`.
-
-## What comes after calibration
-
-Choose a task with meaningful variation, freeze its evaluation protocol, then compare RL alone against representation pretraining with and without future prediction. Count pretraining data collection as environment interaction and report compute separately. Check representation collapse, transfer and policy performance rather than relying on prediction loss alone.
-
-The general idea has substantial prior art: [SPR](https://arxiv.org/abs/2007.05929), [representation pretraining for RL](https://arxiv.org/abs/2106.04799), and [TACO](https://arxiv.org/abs/2306.13229). An auxiliary prediction loss is not by itself a new contribution, nor does it make PPO model-based RL. The next research question must be narrower than this repository's working theme.
-
-## Crossing: distinct training and evaluation layouts
-
-The next baseline uses native `MiniGrid-SimpleCrossingS9N1-v0`, a wall with a gap.
-Its 42 distinct geometries are frozen into 28 train, 7 development and 7 test maps.
-See the [protocol](protocols/crossing-v1.md) and [all layouts](protocols/crossing-layouts.png).
-The split is based on geometry hashes rather than just different random seeds.
-Observations are still symbolic; there is no JEPA objective or visual encoder yet.
-
-[Baseline results](evidence/crossing-v1/RESULTS.md): the three runs reached 46.9–66.5%
-sampled success on train maps and 32.6–55.8% on test maps. Median train success did not
-clear the protocol's 80% feasibility gate. Baseline learning needs investigation before
-using it to support a predictive-representation comparison.
-
-```bash
 .venv/bin/python -m predictive_control.train_crossing --seed 0 --output runs/crossing-v1-seed0
-.venv/bin/python -m predictive_control.train_crossing --seed 1 --output runs/crossing-v1-seed1
-.venv/bin/python -m predictive_control.train_crossing --seed 2 --output runs/crossing-v1-seed2
-.venv/bin/python scripts/evaluate_crossing.py --output runs/crossing-evaluation
-.venv/bin/python scripts/summarize_crossing.py runs/crossing-evaluation
 ```
 
-Each run uses 524,288 interactions. Final evaluation refuses to start until all three
-checkpoints are complete and match the frozen split. Sampled actions are the primary
-metric; greedy actions remain a secondary diagnostic. Evaluation uses local RNGs that
-do not change training's random state. Repeated episodes on seven test maps are not
-hundreds of independent test geometries. Use a fresh output path when reproducing.
+This runs 524,288 interactions on CPU. The initial machine took about 106 seconds,
+including development evaluations. Choose a new output directory for each run.
+[Reproduction commands and saved files](docs/reproducing.md).
 
-## Reproduce the state audit
+## Research context
 
-After generating the three 262,144-step checkpoints:
-
-```bash
-.venv/bin/python -m predictive_control.audit runs/empty-262k-seed0/model.zip runs/empty-262k-seed1/model.zip runs/empty-262k-seed2/model.zip --output runs/state-audit
-.venv/bin/python scripts/validate_audit.py --audit runs/state-audit
-.venv/bin/python scripts/summarize_audit.py runs/state-audit
-```
-
-The audit enumerates every valid start and measures both greedy and sampled execution.
-The second command independently checks the calculation with 4,096 actual episodes
-across three trained policies and a uniform random policy. This exact evaluator is
-specific to the deterministic 5x5 Empty room and stationary policies.
+[SPR](https://arxiv.org/abs/2007.05929),
+[representation pretraining for RL](https://arxiv.org/abs/2106.04799), and
+[TACO](https://arxiv.org/abs/2306.13229) already study predictive representations for
+control. The open question here needs to be more specific than adding an auxiliary
+prediction loss. For now, the work is baseline development and evaluation.
 
 ## Checks
 
@@ -96,4 +60,5 @@ specific to the deterministic 5x5 Empty room and stationary policies.
 .venv/bin/ruff format --check .
 ```
 
-Tests cover observable heading, goal termination, time-limit truncation, and reproducible random-policy evaluation. CI also runs a short training job; learning quality is assessed separately in the experiment results.
+CI checks both training entry points. Tests also cover environment transitions,
+layout separation, reachability and evaluation reproducibility.
