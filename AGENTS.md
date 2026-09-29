@@ -1,6 +1,6 @@
 # Working on this repository
 
-Read the latest dated note in `docs/notes/` before starting an experiment.
+Read README, `docs/reproducing.md`, and the relevant frozen protocol before starting an experiment. Internal session handoffs are maintained separately in the owner's private context repository; do not commit them here.
 
 Keep documentation short and specific. Lead with the result or unresolved question.
 Use measured numbers, concrete failure cases and the reason for the next experiment.
@@ -8,7 +8,7 @@ Avoid promotional language, generic contribution lists and repeated disclaimers.
 Do not describe planned work as implemented or a baseline as a novel method.
 
 Keep README focused on current status and setup. Put commands in `docs/reproducing.md`,
-session decisions in dated notes, and experimental evidence beside its report.
+internal session decisions in private context, and experimental evidence beside its report.
 Update report templates when changing generated prose so regeneration preserves edits.
 
 Preserve completed runs and frozen protocols. Write a new protocol for a changed

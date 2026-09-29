@@ -27,7 +27,7 @@ The current input is a flattened symbolic grid, not a rendered image.
 [Crossing results](evidence/crossing-v1/RESULTS.md) ·
 [Protocol](protocols/crossing-v1.md) ·
 [Layouts](protocols/crossing-layouts.png) ·
-[Working notes and next session](docs/notes/2026-09-20.md)
+[Reproduction](docs/reproducing.md)
 
 ## Run
 
