@@ -11,3 +11,10 @@ dist/
 .ai-context/
 docs/notes/
 **/*handoff*.md
+
+# Internal working context is maintained privately.
+research/STATUS.md
+docs/novelty_assessment.md
+experiments/coding_forensics/next_protocol.md
+reports/experiment_log.md
+AGENTS.md
